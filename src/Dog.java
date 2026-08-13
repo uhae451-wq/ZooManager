@@ -3,7 +3,7 @@ public class Dog extends Animal{
         super(name,"개", age);
     }
     @Override
-    public void makeSound(){
+    void makeSound(){
         System.out.println("왈왈");
     }
 }

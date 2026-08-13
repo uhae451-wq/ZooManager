@@ -1,4 +1,4 @@
-public class Animal {
+public abstract class Animal {
     private String name;
     private String species;
     private int age;
@@ -13,7 +13,5 @@ public class Animal {
         System.out.println("저는 " + this.name + "입니다. 종류는 " + this.species + "이고 나이는 " + this.age + "살입니다.");
     }
 
-    public void makeSound() {
-        System.out.println("짐승의 울음소리");
-    }
+    public abstract void makeSound();
 }
