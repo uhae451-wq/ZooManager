@@ -49,5 +49,15 @@ public abstract class Animal {
     public HealthStatus getHealthStatus() {
         return healthStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "name='" + name + '\'' +
+                ", species=" + species +
+                ", age=" + age +
+                ", healthStatus=" + healthStatus +
+                '}';
+    }
 }
 

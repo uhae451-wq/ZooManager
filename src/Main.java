@@ -1,15 +1,15 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.sql.ClientInfoStatus;
+import java.util.*;
+import java.util.stream.Collectors;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Animal[] zoo = new Animal[10];
-        int count = 0;
+        List<Animal> zoo = new ArrayList<>();
+        Map<String, List<Animal>> keeperToAnimals = new HashMap<>();
         boolean running = true;   // 반복문 종료를 제어하는 플래그
-
         while (running) {
             try {
                 System.out.println("===== 동물원 접수 =====");
@@ -18,6 +18,8 @@ public class Main {
                 System.out.println("3. 훈련 가능한 동물만 훈련시키기");
                 System.out.println("4. 먹이주기");
                 System.out.println("5. 동물 건강상태 변경");
+                System.out.println("6. 사육사 관리 동물들 보기");
+                System.out.println("7. 전체 사육사 목록");
                 System.out.println("0. 종료");
                 System.out.print("선택> ");
 
@@ -26,10 +28,6 @@ public class Main {
 
                 switch (choice) {
                     case 1:
-                        if (count == zoo.length) {
-                            System.out.println("동물 입력횟수 초과(시스템 종료)");
-                            break;
-                        }
                         try {
                             // TODO: 이름, 종류, 나이를 입력받아 name/species/age에 저장
                             // TODO: registered = true
@@ -46,10 +44,13 @@ public class Main {
                             }
                             System.out.print("2. 동물 이름 : ");
                             String name = sc.nextLine();
-                            for (int i = 0; i < count; i++) {
-                                if (zoo[i].getName().equals(name)) {
-                                    throw new IllegalArgumentException("이미 등록된 이름입니다.");
-                                }
+
+                            Set<String> alreayName = zoo.stream()
+                                    .map(Animal::getName)
+                                    .collect(Collectors.toSet());
+
+                            if(alreayName.contains(name)){
+                                throw new IllegalArgumentException("이미 등록된 이름입니다.");
                             }
                             System.out.print("3. 동물 나이 : ");
                             int age;
@@ -59,6 +60,7 @@ public class Main {
                                 System.out.println("숫자를 입력해주세요.");
                                 break;
                             }
+
                             Animal ani = null;
                             switch (spce) {
                                 case 1:
@@ -73,7 +75,11 @@ public class Main {
                                 default:
                                     System.out.println("잘못된 종류입니다.");
                             }
-                            zoo[count++] = ani;
+                            System.out.print("4. 사육사 이름 : ");
+                            String userName = sc.nextLine();
+                            keeperToAnimals.computeIfAbsent(userName, k -> new ArrayList<>()).add(ani);
+
+                            zoo.add(ani);
                         } catch (IllegalArgumentException | IllegalStateException e) {
                             System.out.println("등록 실패: " + e.getMessage());
                         } finally {
@@ -83,50 +89,47 @@ public class Main {
                     case 2:
                         // TODO: registered가 false면 안내 메시지 출력
                         // TODO: registered가 true면 정보 출력
-                        if (count == 0) {
+                        if (zoo.size() == 0) {
                             System.out.println("동물이 없습니다.");
                             break;
                         } else {
-                            for (int i = 0; i < count; i++) {
-                                zoo[i].intrudouce();
-                                zoo[i].makeSound();
-                            }
+                            zoo.forEach((z) -> z.intrudouce());
                         }
                         break;
                     case 3:
-                        if (count == 0) {
+                        if (zoo.size() == 0) {
                             System.out.println("동물이 없습니다.");
                         } else {
-                            for (int i = 0; i < count; i++) {
-                                if (zoo[i] instanceof Trainable) {
-                                    ((Trainable) zoo[i]).train();
+                            for (Animal z : zoo ) {
+                                if (z instanceof Trainable) {
+                                    ((Trainable) z).train();
                                 }
                             }
                         }
                         break;
                     case 4:
-                        if (count == 0) {
+                        if (zoo.size() == 0) {
                             System.out.println("동물이 없습니다.");
                             break;
                         } else {
-                            for (int i = 0; i < count; i++) {
-                                if (zoo[i] instanceof Feeable) {
-                                    ((Feeable) zoo[i]).feed("사료");
+                            for (Animal z : zoo) {
+                                if (z instanceof Feeable) {
+                                    ((Feeable) z).feed("사료");
                                 }
                             }
                         }
                         break;
                     case 5:
-                        if (count == 0) {
+                        if (zoo.size() == 0) {
                             System.out.println("동물이 없습니다.");
                             break;
                         }
                         System.out.print("이름 입력 : ");
                         String name1 = sc.nextLine();
                         Animal nowHealth = null;
-                        for (int i = 0; i < count; i++) {
-                            if (zoo[i].getName().equals(name1)) {
-                                nowHealth = zoo[i];
+                        for (Animal z : zoo) {
+                            if (z.getName().equals(name1)) {
+                                nowHealth = z;
                                 break;
                             }
                         }
@@ -140,6 +143,33 @@ public class Main {
                         }
                         int nowCheck = Integer.parseInt(sc.nextLine());
                         nowHealth.setHealthStatus(healthCheck[nowCheck - 1]);
+                        break;
+                    case 6 :
+                        if (zoo.size() == 0) {
+                            System.out.println("동물이 없습니다.");
+                            break;
+                        }
+                        System.out.print("사육사 이름 입력 : ");
+                        String userName = sc.nextLine();
+                        if(!keeperToAnimals.containsKey(userName)){
+                            System.out.println("해당 사육사는 없습니다.");
+                            break;
+                        }
+                        keeperToAnimals.entrySet().stream()
+                                .filter(e -> e.getKey().equals(userName))
+                                .forEach(e -> System.out.println(e.getValue()));
+                        break;
+                    case 7:
+                        if(keeperToAnimals.size() == 0 ){
+                            System.out.println("등록된 사육사가 없습니다.");
+                        }
+                        keeperToAnimals.forEach((keeper,animal)-> {
+                            System.out.print(keeper + "님 담당 {");
+                            animal.forEach((list) -> {
+                                System.out.print("( 이름 : "+list.getName() + ", 나이 : " + list.getAge() + ") ");
+                            });
+                            System.out.println("}");
+                        });
                         break;
                     case 0:
                         System.out.println("프로그램을 종료합니다");
