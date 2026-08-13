@@ -11,6 +11,6 @@ public class Cat extends Animal implements Trainable{
 
     @Override
     public void train(){
-
+        System.out.println(super.getName() + " 훈련을 시작합니다. 앉아~ ");
     }
 }

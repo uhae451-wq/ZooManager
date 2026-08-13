@@ -9,11 +9,11 @@ public class Dog extends Animal implements Trainable, Feeable{
 
     @Override
     public void feed(String food) {
-        System.out.println(this.name + "에게 먹이를 줍니다: " + food);
+        System.out.println(super.getName() +"에게 먹이를 줍니다: " + food);
     }
 
     @Override
     public void train() {
-        System.out.println(this.name + " 훈련을 시작합니다. 앉아~ ");
+        System.out.println(super.getName() + " 훈련을 시작합니다. 앉아~ ");
     }
 }

@@ -11,6 +11,6 @@ public class Bird extends Animal implements Feeable{
 
     @Override
     public void feed(String food) {
-        System.out.println(this.name + "에게 먹이를 줍니다: " + food);
+        System.out.println(super.getName() +"에게 먹이를 줍니다: " + food);
     }
 }

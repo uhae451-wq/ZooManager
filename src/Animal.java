@@ -1,12 +1,17 @@
 public abstract class Animal {
-    protected String name;
-    protected String species;
-    protected int age;
+    private String name;
+    private String species;
+    private int age;
 
     public Animal(String name, String species, int age){
         this.name = name;
         this.species = species;
-        this.age = age;
+        if(age < 0) {
+            System.out.println("나이가 잘못 기입되어 0으로 보정합니다.");
+            this.age = 0;
+        }else {
+            this.age = age;
+        }
     }
 
     public void intrudouce(){
@@ -14,4 +19,24 @@ public abstract class Animal {
     }
 
     public abstract void makeSound();
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        if(age < 0){
+            System.out.println("나이를 잘못 입력하였습니다.");
+        }else {
+            this.age = age;
+        }
+    }
 }
