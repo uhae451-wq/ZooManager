@@ -13,6 +13,8 @@ public class Main {
             System.out.println("===== 동물원 접수 =====");
             System.out.println("1. 동물 등록");
             System.out.println("2. 동물 정보 보기");
+            System.out.println("3. 훈련 가능한 동물만 훈련시키기");
+            System.out.println("4. 먹이주기");
             System.out.println("0. 종료");
             System.out.print("선택> ");
 
@@ -67,7 +69,30 @@ public class Main {
                         System.out.println("동물이 없습니다.");
                     }else {
                         for(int i=0; i<count; i++){
+                            zoo[i].intrudouce();
                             zoo[i].makeSound();
+                        }
+                    }
+                    break;
+                case 3:
+                    if(count == 0){
+                        System.out.println("동물이 없습니다.");
+                    }else {
+                        for(int i=0; i<count; i++){
+                            if(zoo[i] instanceof Trainable){
+                                ((Trainable) zoo[i]).train();
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                    if(count == 0){
+                        System.out.println("동물이 없습니다.");
+                    }else {
+                        for(int i=0; i<count; i++){
+                            if(zoo[i] instanceof Feeable){
+                                ((Feeable) zoo[i]).feed("사료");
+                            }
                         }
                     }
                     break;
