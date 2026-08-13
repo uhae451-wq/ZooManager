@@ -4,7 +4,7 @@ public class Bird extends Animal{
     }
 
     @Override
-    void makeSound() {
+    public void makeSound() {
         System.out.println("짹짹");
     }
 }
