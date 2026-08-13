@@ -8,8 +8,7 @@ public abstract class Animal {
         this.name = name;
         this.species = species;
         if(age < 0) {
-            System.out.println("나이가 잘못 기입되어 0으로 보정합니다.");
-            this.age = 0;
+            throw new IllegalArgumentException("제발 age면 양수를 넣으라고");
         }else {
             this.age = age;
         }
@@ -40,11 +39,7 @@ public abstract class Animal {
     }
 
     public void setAge(int age) {
-        if(age < 0){
-            System.out.println("나이를 잘못 입력하였습니다.");
-        }else {
-            this.age = age;
-        }
+        throw new IllegalArgumentException("아니 setAge에 뭘 넣은거냐고");
     }
 
     public void setHealthStatus(HealthStatus healthStatus) {
