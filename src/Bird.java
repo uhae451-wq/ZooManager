@@ -1,7 +1,12 @@
 public class Bird extends Animal implements Feeable{
 
     public Bird(String name, int age){
-        super(name, "새", age);
+        super(name, AnimalType.BIRD, age);
+    }
+
+    @Override
+    public void intrudouce() {
+        super.intrudouce();
     }
 
     @Override

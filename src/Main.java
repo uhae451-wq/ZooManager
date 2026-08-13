@@ -15,6 +15,7 @@ public class Main {
             System.out.println("2. 동물 정보 보기");
             System.out.println("3. 훈련 가능한 동물만 훈련시키기");
             System.out.println("4. 먹이주기");
+            System.out.println("5. 동물 건강상태 변경");
             System.out.println("0. 종료");
             System.out.print("선택> ");
 
@@ -67,6 +68,7 @@ public class Main {
                     // TODO: registered가 true면 정보 출력
                     if(count == 0){
                         System.out.println("동물이 없습니다.");
+                        break;
                     }else {
                         for(int i=0; i<count; i++){
                             zoo[i].intrudouce();
@@ -88,6 +90,7 @@ public class Main {
                 case 4:
                     if(count == 0){
                         System.out.println("동물이 없습니다.");
+                        break;
                     }else {
                         for(int i=0; i<count; i++){
                             if(zoo[i] instanceof Feeable){
@@ -95,6 +98,31 @@ public class Main {
                             }
                         }
                     }
+                    break;
+                case 5:
+                    if(count == 0){
+                        System.out.println("동물이 없습니다.");
+                        break;
+                    }
+                    System.out.print("이름 입력 : ");
+                    String name1 = sc.nextLine();
+                    Animal nowHealth = null;
+                    for(int i=0; i<count; i++){
+                        if(zoo[i].getName().equals(name1)){
+                            nowHealth = zoo[i];
+                            break;
+                        }
+                    }
+                    if(nowHealth == null){
+                        System.out.println("찾는 동물이 없습니다.");
+                        break;
+                    }
+                    HealthStatus[] healthCheck = HealthStatus.values();
+                    for(int i=0; i<healthCheck.length; i++){
+                        System.out.println(i+1 + ". " + healthCheck[i]);
+                    }
+                    int nowCheck = Integer.parseInt(sc.nextLine());
+                    nowHealth.setHealthStatus(healthCheck[nowCheck-1]);
                     break;
                 case 0:
                     System.out.println("프로그램을 종료합니다");

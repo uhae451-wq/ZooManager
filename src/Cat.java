@@ -1,7 +1,12 @@
 public class Cat extends Animal implements Trainable{
 
     public Cat(String name, int age){
-        super(name, "고양이" , age);
+        super(name, AnimalType.CAT , age);
+    }
+
+    @Override
+    public void intrudouce() {
+        super.intrudouce();
     }
 
     @Override
