@@ -5,10 +5,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String name = null;
-        String species = null;
-        int age = 0;
-        boolean registered = false;
+        Animal[] zoo = new Animal[10];
+        int count = 0;
         boolean running = true;   // 반복문 종료를 제어하는 플래그
 
         while (running) {
@@ -26,22 +24,23 @@ public class Main {
                     // TODO: 이름, 종류, 나이를 입력받아 name/species/age에 저장
                     // TODO: registered = true
                     System.out.println("1. 동물 이름 등");
-                    name = sc.nextLine();
+                    String name = sc.nextLine();
                     System.out.println("2. 동물 종 등록");
-                    species = sc.nextLine();
+                    String spce = sc.nextLine();
                     System.out.println("3. 동물 나이 등록");
-                    age = Integer.parseInt(sc.nextLine());
-                    registered = true;
+                    int age = Integer.parseInt(sc.nextLine());
+                    zoo[count] = new Animal(name,spce,age);
+                    count++;
                     break;
                 case 2:
                     // TODO: registered가 false면 안내 메시지 출력
                     // TODO: registered가 true면 정보 출력
-                    if(registered){
-                        System.out.println(name);
-                        System.out.println(species);
-                        System.out.println(age);
-                    }else {
+                    if(count == 0){
                         System.out.println("동물이 없습니다.");
+                    }else {
+                        for(int i=0; i<count; i++){
+                            zoo[i].intrudouce();
+                        }
                     }
                     break;
                 case 0:
