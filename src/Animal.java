@@ -13,27 +13,7 @@ public class Animal {
         System.out.println("저는 " + this.name + "입니다. 종류는 " + this.species + "이고 나이는 " + this.age + "살입니다.");
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getSpecies() {
-        return species;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSpecies(String species) {
-        this.species = species;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void makeSound() {
+        System.out.println("짐승의 울음소리");
     }
 }
